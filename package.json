@@ -1,0 +1,72 @@
+{
+  "name": "selmer",
+  "version": "1.13.1-ts.0",
+  "description": "Django-style templates for TypeScript and Node.js",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./parser": {
+      "types": "./dist/parser.d.ts",
+      "import": "./dist/parser.js"
+    },
+    "./filters": {
+      "types": "./dist/filters.d.ts",
+      "import": "./dist/filters.js"
+    },
+    "./filter-parser": {
+      "types": "./dist/filter-parser.d.ts",
+      "import": "./dist/filter-parser.js"
+    },
+    "./tags": {
+      "types": "./dist/tags.d.ts",
+      "import": "./dist/tags.js"
+    },
+    "./template-parser": {
+      "types": "./dist/template-parser.d.ts",
+      "import": "./dist/template-parser.js"
+    },
+    "./util": {
+      "types": "./dist/util.d.ts",
+      "import": "./dist/util.js"
+    },
+    "./validator": {
+      "types": "./dist/validator.d.ts",
+      "import": "./dist/validator.js"
+    },
+    "./middleware": {
+      "types": "./dist/middleware.d.ts",
+      "import": "./dist/middleware.js"
+    }
+  },
+  "files": [
+    "dist",
+    "resources",
+    "docs",
+    "README.md",
+    "changes.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "check": "tsc -p tsconfig.json --noEmit",
+    "prepack": "npm run build"
+  },
+  "keywords": [
+    "template",
+    "django",
+    "selmer",
+    "typescript"
+  ],
+  "license": "EPL-1.0",
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.4"
+  }
+}

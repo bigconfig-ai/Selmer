@@ -1,7 +1,6 @@
----
 name: CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   test:
@@ -9,17 +8,22 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Prepare java
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '19'      
+        uses: actions/checkout@v4
 
-      - name: Setup Clojure
-        uses: DeLaGuardo/setup-clojure@10.2
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          tools-deps: '1.10.1.693'
-          
-      - name: Run test suite
-        run: clojure -M:dev:test
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type-check
+        run: npm run check
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
