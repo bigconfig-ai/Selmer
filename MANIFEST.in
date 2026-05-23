@@ -1,0 +1,3 @@
+include changes.md
+recursive-include docs *.md *.html
+recursive-include resources *.html

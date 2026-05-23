@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "selmer"
+version = "1.13.1.post0"
+description = "Django-style templates for Python, ported from Selmer"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "EPL-1.0"
+authors = [{ name = "Dmitri Sotnikov and contributors" }]
+keywords = ["template", "django", "selmer"]
+dependencies = []
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed"
+]
+
+[project.urls]
+Homepage = "https://github.com/yogthos/Selmer"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0"
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+selmer = ["py.typed", "resources/*.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["src"]
