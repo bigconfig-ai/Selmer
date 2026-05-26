@@ -1,0 +1,16 @@
+import type { Context } from "./types.js";
+import { filters } from "./filters.js";
+export { SAFE_CONTEXT_KEY, SAFE_FILTER, isSafeValue, safe, unwrapSafe, type SafeValue } from "./safe.js";
+export declare function escapeHtmlStar(s: string): string;
+export declare const escapeHtml$: typeof escapeHtmlStar;
+export declare function stripDoublequotes(s: string): string;
+export declare function escapeHtml(x: unknown): unknown;
+export declare function fixFilterArgs(args: string[]): string[];
+export declare function lookupArgs(context: Context): (arg: string) => unknown;
+export declare function filterStrToFn(s: string): (x: unknown, context: Context) => unknown;
+export declare function literal(value: string): boolean;
+export declare const literal$: typeof literal;
+export declare function parseLiteral(value: string): string;
+export declare function splitValue(s: string): string[];
+export declare function compileFilterBody(s: string, escape?: boolean): (context: Context) => unknown;
+export { filters };

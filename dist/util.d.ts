@@ -1,0 +1,76 @@
+import type { AccessorKey, AccessorPath, Context, Delimiters, RenderOptions, TagInfo } from "./types.js";
+export declare const defaultDelimiters: Delimiters;
+export declare function makeDelimiters(opts?: RenderOptions): Delimiters;
+export declare function variableOpen(d: Delimiters): string;
+export declare function variableClose(d: Delimiters): string;
+export declare function expressionOpen(d: Delimiters): string;
+export declare function expressionClose(d: Delimiters): string;
+export declare function shortCommentOpen(d: Delimiters): string;
+export declare function shortCommentClose(d: Delimiters): string;
+export declare function escapeRegExp(s: string): string;
+export declare function pattern(...content: unknown[]): RegExp;
+export type MissingValueFormatter = (tag: TagInfo | {
+    tagName?: string;
+    tagValue?: string;
+    args?: AccessorPath | string[];
+}, context: Context) => unknown;
+export declare const defaultMissingValueFormatter: MissingValueFormatter;
+export declare function getCustomResourcePath(): string | null;
+export declare function setCustomResourcePath(path: string | URL | null | undefined): void;
+export declare const setCustomResourcePath$: typeof setCustomResourcePath;
+export declare function setResourceLoader(loader: ((path: string) => string | undefined | null) | undefined): void;
+export declare function getResourceLoader(): ((path: string) => string | undefined | null) | undefined;
+export declare function turnOffEscaping(): void;
+export declare function turnOnEscaping(): void;
+export declare function isEscapingVariables(): boolean;
+export declare function withEscaping<T>(fn: () => T): T;
+export declare function withoutEscaping<T>(fn: () => T): T;
+export declare function getMissingValueFormatter(): MissingValueFormatter;
+export declare function shouldFilterMissingValues(): boolean;
+export declare function setMissingValueFormatter(formatter: MissingValueFormatter, opts?: {
+    filterMissingValues?: boolean;
+}): void;
+export declare function resetMissingValueFormatter(): void;
+export declare function setWarnOnDeprecatedKeys(value: boolean): void;
+export declare function setDeprecationWarningHandler(handler: (message: string) => void): void;
+export declare function resetDeprecatedKeyWarnings(): void;
+export declare function deprecatedKeyLookup(context: Context, namespacedKey: string, nonNamespacedKey: string): unknown;
+export declare function appendSlash(s: string | null): string | null;
+export declare function makeResourcePath(path: string | URL | null): string | null;
+export declare function setResourcePath(path: string | URL | null): void;
+export declare function looksLikeAbsoluteFilePath(path: string): boolean;
+export interface ResolvedResource {
+    path: string;
+    displayPath: string;
+    content?: string;
+    lastModified: number;
+}
+export declare function resourcePath(template: string | URL, opts?: RenderOptions): ResolvedResource | undefined;
+export declare function readResource(template: string | URL, opts?: RenderOptions): {
+    content: string;
+    resource: ResolvedResource;
+};
+export declare function resourceLastModified(template: string | URL, opts?: RenderOptions): number;
+export declare function checkTemplateExists(template: string | URL, opts?: RenderOptions): void;
+export declare function getOwn(context: Context | unknown, key: AccessorKey): {
+    found: boolean;
+    value: unknown;
+};
+export declare function getAccessor(m: unknown, k: AccessorKey): unknown;
+export declare function getIn(context: Context | unknown, path: AccessorPath): unknown;
+export declare function assocIn<T extends Context>(context: T, path: AccessorPath, value: unknown): T;
+export declare function cloneContext(context: Context): Context;
+export declare function parseAccessor(accessor: string): AccessorPath;
+export declare function splitByArgs(s: string): string[];
+export declare function ffind<T>(f: (value: T) => boolean, coll: Iterable<T>): T | undefined;
+export declare function hex(algo: string, s: string): string;
+export declare function isNil(value: unknown): value is null | undefined;
+export declare function isIterable(value: unknown): value is Iterable<unknown>;
+export declare function seq(value: unknown): unknown[];
+export declare function count(value: unknown): number;
+export declare function isEmpty(value: unknown): boolean;
+export declare function notEmpty<T>(value: T): T | undefined;
+export declare function cljStr(value: unknown): string;
+export declare function prStr(value: unknown): string;
+export declare function projectRootFromImportMeta(metaUrl: string): string;
+export declare function toFileUrl(path: string): URL;
