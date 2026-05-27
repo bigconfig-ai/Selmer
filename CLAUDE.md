@@ -68,7 +68,10 @@ import { render, renderFile, parse, renderTemplate, addFilter, addTag } from "se
 | `renderTemplate(nodes, context)` | Render an already-parsed tree |
 | `addFilter` / `addTag` | Register custom filters / tags |
 | `cacheOn` / `cacheOff` | Toggle the template cache |
-| `validateOff` | Disable validation |
+| `validateOn` / `validateOff` | Toggle validation |
+| `clearCache` | Reset the template cache |
+| `setResourcePath` | Pin the lookup root for `renderFile` |
+| `knownVariables` | Static analysis of variables a template references |
 
 ## Template Language Surface
 
@@ -82,7 +85,7 @@ import { render, renderFile, parse, renderTemplate, addFilter, addTag } from "se
 - **ESM-only** — keep it that way. Imports use explicit `.js` extensions (required by `NodeNext` resolution).
 - **No runtime dependencies** — load-bearing constraint for downstream `big-config/typescript` users.
 - Keep the public surface in `src/index.ts` and the subpath `exports` in `package.json` aligned with the Clojure reference's `selmer.parser` surface; downstream `big-config/typescript` depends on exact names.
-- Mirror Clojure mutating-name semantics with idiomatic camelCase (`cacheOn`, `addFilter`); a `Bang` suffix is **not** used here — TypeScript users get idiomatic names only.
+- Both forms of Clojure's mutating names are exported: idiomatic camelCase (`cacheOn`, `addFilter`, `addTag`, `validateOff`, `setResourcePath`, `clearCache`) **and** a `$`-suffixed alias that mirrors Clojure's `!` convention (`cacheOn$`, `addFilter$`/`addFilter$ForParser`, `addTag$`, `validateOff$`, `setResourcePath$`, `clearCache$`). Keep both exposed — downstream code may use either spelling.
 - Tests live under `test/` and mirror `src/` filenames.
 - License is EPL-1.0 (matching upstream Selmer).
 
