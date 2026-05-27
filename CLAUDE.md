@@ -64,11 +64,13 @@ from selmer import render, render_file, parse_string, parse_file, parse_input, r
 | `parse_file(path, **opts)` | Parse a file |
 | `parse_input(s, **opts)` | Auto-detect string vs path |
 | `render_template(nodes, context)` | Render an already-parsed AST |
-| `add_filter!` / `add_tag!` | Register custom filters / tags |
-| `cache_on!` / `cache_off!` | Toggle the template cache |
-| `validate_off!` | Disable validation |
+| `add_filter` / `add_tag` | Register custom filters / tags |
+| `cache_on` / `cache_off` / `clear_cache` | Manage the template cache |
+| `validate_on` / `validate_off` | Toggle validation |
+| `set_resource_path` | Pin the lookup root for `render_file` |
+| `known_variables` / `known_variable_paths` | Static analysis of variables a template references |
 
-Clojure-style mutating names use the `_bang` suffix (`cache_on_bang`, `add_filter_bang`, `validate_off_bang`); Pythonic aliases without the suffix are also exposed.
+Clojure-style mutating names use the `_bang` suffix as a stand-in for `!` (`cache_on_bang`, `add_filter_bang`, `add_tag_bang`, `validate_off_bang`, `set_resource_path_bang`, `clear_cache_bang`); the Pythonic aliases without the suffix are also exposed. Keep both forms — downstream code may use either spelling.
 
 ## Template Language Surface
 
@@ -81,7 +83,7 @@ Clojure-style mutating names use the `_bang` suffix (`cache_on_bang`, `add_filte
 
 - Stdlib-only at runtime — do **not** add runtime dependencies.
 - Keep the public surface in `__init__.py` aligned with `selmer.parser`'s Clojure surface (`render`, `render_file`, …); downstream `big-config/python` depends on exact names.
-- Mirror Clojure's `add-filter!`/`add-tag!` naming via both the `_bang`-suffixed names and the idiomatic Python aliases — keep both.
+- Mirror Clojure's `add-filter!`/`add-tag!` naming via both the `_bang`-suffixed names and the idiomatic Python aliases — keep both exposed in `__init__.py`.
 - `py.typed` marker is shipped; keep type hints accurate.
 - License is EPL-1.0 (matching upstream Selmer).
 
