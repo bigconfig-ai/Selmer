@@ -6,8 +6,10 @@ This package keeps Selmer's core API and template language: variables, filters, 
 
 ## Install
 
+Within the BigConfig workspace this port is consumed as a GitHub-pinned dependency (e.g. `big-config/typescript` pins `github:bigconfig-ai/Selmer#<sha>` in `package.json`):
+
 ```sh
-npm install selmer
+npm install github:bigconfig-ai/Selmer#<sha>
 ```
 
 ## Runtime
