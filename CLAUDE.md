@@ -6,7 +6,7 @@ This file describes the `selmer` Python codebase for AI assistants. Read it befo
 
 This directory is a dependency-free Python 3.12 port of the [Selmer](https://github.com/yogthos/Selmer) Django-style template system. The Clojure sibling (`../clojure`) is the upstream reference; this port preserves Selmer's core template language and public API shape (variables, filters, tags, includes, template inheritance, validation, caching, custom tags/filters).
 
-It is consumed by `big-config/python` as a Git-pinned dependency in `pyproject.toml`.
+It is consumed by the Python SDK (`big-config/python`) as a Git-pinned dependency in `pyproject.toml`.
 
 ## Tech Stack
 
@@ -77,19 +77,19 @@ Clojure-style mutating names use the `_bang` suffix as a stand-in for `!` (`cach
 - Variables: `{{ name }}`, dotted paths (`{{ foo.bar.0.baz }}`); double-dot escapes namespaced keys (`{{ foo..bar/baz }}`).
 - Filters: `{{ name|upper }}`, chainable.
 - Tags: `{% if %}`, `{% for %}`, `{% block %}`, `{% extends %}`, `{% include %}`, etc.
-- Custom delimiters: pass `tag_open`, `tag_close`, `filter_open`, `filter_close` opts so downstream tools' `{{ ... }}` can pass through unrendered (used by `big-config`).
+- Custom delimiters: pass `tag_open`, `tag_close`, `filter_open`, `filter_close` opts so downstream tools' `{{ ... }}` can pass through unrendered (used by BigConfig SDK (`big-config`)).
 
 ## Code Conventions
 
 - Stdlib-only at runtime — do **not** add runtime dependencies.
-- Keep the public surface in `__init__.py` aligned with `selmer.parser`'s Clojure surface (`render`, `render_file`, …); downstream `big-config/python` depends on exact names.
+- Keep the public surface in `__init__.py` aligned with `selmer.parser`'s Clojure surface (`render`, `render_file`, …); the downstream Python SDK (`big-config/python`) depends on exact names.
 - Mirror Clojure's `add-filter!`/`add-tag!` naming via both the `_bang`-suffixed names and the idiomatic Python aliases — keep both exposed in `__init__.py`.
 - `py.typed` marker is shipped; keep type hints accurate.
 - License is EPL-1.0 (matching upstream Selmer).
 
 ## What to Avoid
 
-- Do not introduce runtime dependencies — the stdlib-only constraint is load-bearing for downstream `big-config/python` users.
+- Do not introduce runtime dependencies — the stdlib-only constraint is load-bearing for downstream Python SDK users.
 - Do not diverge from the Clojure reference's template-language semantics; if behavior must change, change it in `../clojure` first and port over.
 
 ## Git
