@@ -6,7 +6,7 @@ This file describes the `selmer` TypeScript codebase for AI assistants. Read it 
 
 This directory is a dependency-free TypeScript/Node.js port of the [Selmer](https://github.com/yogthos/Selmer) Django-style template system. The Clojure sibling (`../clojure`) is the upstream reference; this port preserves Selmer's core template language and public API shape (variables, filters, tags, includes, template inheritance, validation, caching, custom tags/filters).
 
-It is consumed by `big-config/typescript` as a GitHub-pinned npm dependency.
+It is consumed by the TypeScript SDK (`big-config/typescript`) as a GitHub-pinned npm dependency.
 
 ## Tech Stack
 
@@ -78,13 +78,13 @@ import { render, renderFile, parse, renderTemplate, addFilter, addTag } from "se
 - Variables: `{{ name }}`, dotted paths (`{{ foo.bar.0.baz }}`); double-dot escapes namespaced keys (`{{ foo..bar/baz }}`).
 - Filters: `{{ name|upper }}`, chainable.
 - Tags: `{% if %}`, `{% for %}`, `{% block %}`, `{% extends %}`, `{% include %}`, etc.
-- Custom delimiters: pass `tagOpen`, `tagClose`, `filterOpen`, `filterClose` in `opts` so downstream tools' `{{ ... }}` can pass through unrendered (used by `big-config`).
+- Custom delimiters: pass `tagOpen`, `tagClose`, `filterOpen`, `filterClose` in `opts` so downstream tools' `{{ ... }}` can pass through unrendered (used by BigConfig SDK (`big-config`)).
 
 ## Code Conventions
 
 - **ESM-only** — keep it that way. Imports use explicit `.js` extensions (required by `NodeNext` resolution).
-- **No runtime dependencies** — load-bearing constraint for downstream `big-config/typescript` users.
-- Keep the public surface in `src/index.ts` and the subpath `exports` in `package.json` aligned with the Clojure reference's `selmer.parser` surface; downstream `big-config/typescript` depends on exact names.
+- **No runtime dependencies** — load-bearing constraint for downstream TypeScript SDK users.
+- Keep the public surface in `src/index.ts` and the subpath `exports` in `package.json` aligned with the Clojure reference's `selmer.parser` surface; the downstream TypeScript SDK (`big-config/typescript`) depends on exact names.
 - Both forms of Clojure's mutating names are exported: idiomatic camelCase (`cacheOn`, `addFilter`, `addTag`, `validateOff`, `setResourcePath`, `clearCache`) **and** a `$`-suffixed alias that mirrors Clojure's `!` convention (`cacheOn$`, `addFilter$`/`addFilter$ForParser`, `addTag$`, `validateOff$`, `setResourcePath$`, `clearCache$`). Keep both exposed — downstream code may use either spelling.
 - Tests live under `test/` and mirror `src/` filenames.
 - License is EPL-1.0 (matching upstream Selmer).
