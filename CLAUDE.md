@@ -6,7 +6,7 @@ This file describes the `selmer` Clojure codebase for AI assistants. Read it bef
 
 This directory is the upstream Selmer Clojure library — a fast, Django-inspired template system in pure Clojure (originally `yogthos/Selmer`). The Python and TypeScript siblings (`../python`, `../typescript`) are ports of this implementation; treat this one as the reference.
 
-It is consumed by `big-config/clojure` as the Maven artifact `selmer/selmer {:mvn/version "1.13.1"}`.
+It is consumed by the Clojure SDK (`big-config/clojure`) as the Maven artifact `selmer/selmer {:mvn/version "1.13.1"}`.
 
 ## Tech Stack
 
@@ -76,18 +76,18 @@ clojure -T:build:deps help/doc :ns build
 - Filters: `{{ name|upper }}`, chainable; custom filters via `add-filter!`.
 - Tags: `{% if %}`, `{% for %}`, `{% block %}`, `{% extends %}`, `{% include %}`, `{% comment %}`, `{% cycle %}`, `{% safe %}`, etc.
 - Inheritance: `{% extends "base.html" %} {% block name %}...{% endblock %}`.
-- Custom delimiters: pass `:tag-open`, `:tag-close`, `:filter-open`, `:filter-close` to `render` (`big-config` uses this to switch variables to `<{ ... }>` so downstream Ansible's `{{ ... }}` passes through).
+- Custom delimiters: pass `:tag-open`, `:tag-close`, `:filter-open`, `:filter-close` to `render` (BigConfig SDK uses this to switch variables to `<{ ... }>` so downstream Ansible's `{{ ... }}` passes through).
 
 ## Code Conventions
 
-- Public API is what `selmer.parser` re-exports — keep that surface stable; downstream `big-config` consumers depend on exact signatures.
+- Public API is what `selmer.parser` re-exports — keep that surface stable; downstream SDK consumers (`big-config`) depend on exact signatures.
 - `selmer.node` is AOT-compiled and listed under `:deps/prep-lib` so consumers (`clojure -X:deps prep`) can use this repo directly as a Git dep — keep `:ensure "target/classes"` working.
 - Tests live under `test/selmer/`; mirror namespace structure under `src/selmer/`.
 - License is EPL-1.0 (see `LICENSE`).
 
 ## What to Avoid
 
-- Do not change public function signatures in `selmer.parser` without coordinating with `big-config/clojure` and the Python/TypeScript ports.
+- Do not change public function signatures in `selmer.parser` without coordinating with the Clojure SDK (`big-config/clojure`) and the Python/TypeScript ports.
 - Do not remove the Leiningen `project.clj` — some downstream consumers still use it.
 
 ## Git
